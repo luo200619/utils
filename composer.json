@@ -1,0 +1,18 @@
+{
+    "name": "szjcomo/utils",
+    "description": "思智捷管理系统工具库",
+    "type": "project",
+    "authors": [
+        {
+            "name": "como",
+            "email": "814655481@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload":{
+	"psr-4":{
+		"szj\\utils\\":"src/szj/utils"
+	}
+    }
+}
