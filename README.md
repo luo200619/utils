@@ -1,5 +1,5 @@
 # 思智捷管理系统工具类
-## 思智捷管理系统文章模块(版本要求2.3+)
+##### 思智捷管理系统文章模块(版本要求2.3+)
 ### Arcitle类
 	文章搜索
 	seachArcitle($keywords = '',$options = [])
@@ -165,8 +165,7 @@
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;limit | mixed  |  [0,15] | 获取条数  |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;order | string  |  sort_order| 排序  |
 
-## 百度识别库
-
+### Baidu类
 	构造函数
 	construct($config = array())
 |  参数名称 | 类型  | 默认值  |  说明 |
@@ -207,8 +206,7 @@
 |  $tid | string  | 1bc64f846180ac6d768a8a6dfca1151c  |   |
 |  $cid | int  | 0  |   |
 
-## 电子表格(Excel)类的使用说明
-
+### Excel类
 	构造函数
 	construct($conf = array())
 |  参数名称 | 类型  | 默认值  |  说明 |
@@ -237,7 +235,7 @@
 |  $fileName | string  | 空  | 需要导入的excel文件名称  |
 |  $defaultIndex | int  | 0  | 默认导入是第一张表  |
 
-## 邮件发送类
+### Mailer类
 ### 一、简单示例
 ```php
 $Mailer = new \szj\utils\Mailer;
@@ -282,8 +280,7 @@ $result = $Mailer->send();
 var_dump($result);
 ```
 
-## 百度地图类
-
+### Map类
 ### 构造函数
 #### 1、无参的构造函数
 ```php
