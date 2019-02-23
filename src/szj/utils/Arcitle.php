@@ -11,9 +11,9 @@
  * |-----------------------------------------------------------------------------------
  */
 
-namespace szj\arcitle;
+namespace szj\utils;
 use app\common\model\Base;
-use szj\arcitle\ArcitleCategory;
+use szj\utils\ArcitleCategory;
 /**
  * 思智捷管理系统文章模块
  */
