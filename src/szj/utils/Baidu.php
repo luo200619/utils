@@ -143,7 +143,7 @@ Class Baidu {
                                 'idcardno'  =>$arr['words_result']['公民身份号码']['words'],
                                 'sex'       =>$arr['words_result']['性别']['words'],
                                 'nation'    =>$arr['words_result']['民族']['words'],
-                                'address'   =>$arr['words_result']['住址']['words'],  
+                                'areaaddr'   =>$arr['words_result']['住址']['words'],  
                             ];
                             if($userimg){
                                 $tmpData['userimg'] = $this->getUserImagePath($imgurl);
@@ -279,11 +279,12 @@ Class Baidu {
                 $resultJson = curl_post($url,$postdata,['Content-Type'=>'application/x-www-form-urlencoded']);
                 $data = json_decode($resultJson,true);
                 if(empty($data['error_code'])){
-                    $info = $this->HouseRegHanadle($data);
+                    $temp = $this->customOrcHanadle($data);
+                    $info = $this->InfoHanadle($temp);
                     if(empty($info)){
                         $result = appResult('系统出错了,请联系管理员');
                     } else {
-                        $result = appResult('户口本识别成功',$info,false);
+                        $result = appResult('户口本个人页识别成功',$info,false);
                     }
                 } else {
                     $result = appResult($data['error_msg']);
@@ -319,7 +320,7 @@ Class Baidu {
                 $resultJson = curl_post($url,$postdata,['Content-Type'=>'application/x-www-form-urlencoded']);
                 $data = json_decode($resultJson,true);
                 if(empty($data['error_code'])){
-                    $info = $this->HouseIndexHanadle($data);
+                    $info = $this->customOrcHanadle($data);
                     if(empty($info)){
                         $result = appResult('未知错误,请联系管理员');
                     } else {
@@ -332,56 +333,7 @@ Class Baidu {
         }
         return $result;
     }
-    /**
-     * [HouseIndexHanadle 处理户口本首页信息]
-     * @Author    como
-     * @DateTime  2019-01-24
-     * @copyright 思智捷管理系统
-     * @version   [1.5.0]
-     * @param     array      $data [description]
-     */
-    Private function HouseIndexHanadle($data = []){
-        $info = [];
-        $toField = ['姓名'=>'username','户籍地址'=>'areaaddr'];
-        if(!empty($data['data']) && !empty($data['data']['ret'])){
-            $callback = function($val,$key) use(&$info,&$toField){
-                $info[$toField[$val['word_name']]] = ['value'=>$val['word']];
-                if(isset($val['probability']) && isset($val['probability']['min'])){
-                    $info[$toField[$val['word_name']]]['reliability'] = $val['probability']['min'];
-                } else {
-                    $info[$toField[$val['word_name']]]['reliability'] = 0;
-                }
-            };
-            array_walk($data['data']['ret'], $callback);
-        }
-        return $info;
-    }
 
-
-    /**
-     * [HouseRegHanadle 组合数据信息]
-     * @Author    como
-     * @DateTime  2019-01-10
-     * @copyright 思智捷管理系统
-     * @version   [1.5.0]
-     * @param     array      $data [description]
-     */
-    Private function HouseRegHanadle($data = []){
-        $info = [];
-        $toField = ['民族'=>'nation','性别'=>'sex','出生日期'=>'born','身份证号'=>'idcardno','学生姓名'=>'username','姓名'=>'username'];
-        if(!empty($data['data']) && !empty($data['data']['ret'])){
-            $callback = function($val,$key) use(&$info,&$toField){
-                $info[$toField[$val['word_name']]] = ['value'=>$val['word']];
-                if(isset($val['probability']) && isset($val['probability']['min'])){
-                    $info[$toField[$val['word_name']]]['reliability'] = $val['probability']['min'];
-                } else {
-                    $info[$toField[$val['word_name']]]['reliability'] = 0;
-                }
-            };
-            array_walk($data['data']['ret'], $callback);
-        }
-        return $this->InfoHanadle($info);
-    }
     /**
      * [InfoHanadle 在返回前处理内容]
      * @Author    como
@@ -437,8 +389,70 @@ Class Baidu {
         }
         return str_replace(['年','月','日'],['-','-',''],$born);
     }
-
-
+    /**
+     * [gdResideCard 广东省居民居住证识别器]
+     * @Author    como
+     * @DateTime  2019-03-19
+     * @copyright 思智捷管理系统
+     * @version   [1.5.0]
+     * @param     string     $imgurl [description]
+     * @param     string     $tid    [description]
+     * @param     integer    $cid    [description]
+     */
+    Public function gdResideCard($imgurl = '',$tid = 'e678de49ef660977cd536cfd4522cc43',$cid = 0){
+        if(!file_exists($imgurl)){
+            $result = appResult('居住证图片不存在');
+        } else {
+            $access_token = $this->getAccessToken();
+            if($access_token['err']){
+                $result = $access_token;
+            } else {
+                $url = $this->buildUrl($this->apiUrl['cust_img_url'],['access_token'=>$access_token['data']]);
+                $postdata = [
+                    'image'=>base64_encode(file_get_contents($imgurl)),
+                    'templateSign'=>$tid,
+                    'classifierId'=>$cid
+                ];
+                $resultJson = curl_post($url,$postdata,['Content-Type'=>'application/x-www-form-urlencoded']);
+                $data = json_decode($resultJson,true);
+                if(empty($data['error_code'])){
+                    $info = $this->customOrcHanadle($data);
+                    if(empty($info)){
+                        $result = appResult('未知错误,请联系管理员');
+                    } else {
+                        $result = appResult('居住证识别成功',$info,false);
+                    }
+                } else {
+                    $result = appResult($data['error_msg']);
+                }
+            }
+        }
+        return $result;
+    }
+    /**
+     * [customOrcHanadle 自定义orc返回处理]
+     * @Author    como
+     * @DateTime  2019-03-19
+     * @copyright 思智捷管理系统
+     * @version   [1.5.0]
+     * @param     array      $data [description]
+     * @return    [type]           [description]
+     */
+    Private function customOrcHanadle($data = []){
+        $info = [];
+        if(!empty($data['data']) && !empty($data['data']['ret'])){
+            $callback = function($val,$key) use(&$info){
+                $info[$val['word_name']] = ['value'=>$val['word']];
+                if(isset($val['probability']) && isset($val['probability']['min'])){
+                    $info[$val['word_name']]['reliability'] = $val['probability']['min'];
+                } else {
+                    $info[$val['word_name']]['reliability'] = 0;
+                }
+            };
+            array_walk($data['data']['ret'], $callback);
+        }
+        return $info;
+    }
 
 
 }
