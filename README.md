@@ -1,6 +1,6 @@
 # 思智捷管理系统工具类
 ##### 思智捷管理系统文章模块(版本要求2.3+)
-### Arcitle类
+### Arcitle类(szj\utils\Arcitle)
 	文章搜索
 	seachArcitle($keywords = '',$options = [])
 	
@@ -92,7 +92,7 @@
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where | array  |  空 | 其它条件  |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field | string  |  true | 需要的字段，默认所有字段  |
 
-### ArcitleCategory类
+### ArcitleCategory类(szj\utils\ArcitleCategory)
 
 	获取当前文章分类的所有父节点列表
 	getRecursionParentCategory($cid = 0,$options = [])
@@ -165,7 +165,7 @@
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;limit | mixed  |  [0,15] | 获取条数  |
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;order | string  |  sort_order| 排序  |
 
-### Baidu类
+### Baidu类（szj\utils\Baidu）
 	构造函数
 	construct($config = array())
 |  参数名称 | 类型  | 默认值  |  说明 |
@@ -177,12 +177,13 @@
 |  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;secret | string  |  '' | 百度secret  |
 
 	获取身份证识别后的结果
-	IdCard($imgurl = '',$isside = true,$userimg = false)
+	IdCard($imgurl = '',$userimg = false,$detect = true,$isside = true)
 |  参数名称 | 类型  | 默认值  |  说明 |
 | ------------ | ------------ | ------------ | ------------ |
 |  $imgurl | string  | 空  | 身份证图片路径  |
-|  $isside | bool  | true  | 是否严格模式检查  |
-|  $userimg | bool  | false  | 是否需要截取身份证头像,默认不截取  |
+|  $userimg | bool  | false  | 是否需要用户头像  |
+|  $detect | bool  | true  | 是否判断身份证真伪  |
+|  $isside | bool  | true  | 正面true 反面false  |
 
 	通用文字识别器
 	CommonOrc($imgurl = '')
@@ -191,30 +192,42 @@
 |  $imgurl | string  | 空  | 图片路径  |
 
 	户口本个人页识别器
-	HouseReg($imgurl = '',$tid = '232a744776294938469b3c442dcecac0',$cid = 1)
+	HouseReg($imgurl = '',$options = [])
 |  参数名称 | 类型  | 默认值  |  说明 |
 | ------------ | ------------ | ------------ | ------------ |
 |  $imgurl | string  | 空  | 户口本个人页图片路径  |
-|  $tid | string  | 232a744776294938469b3c442dcecac0  |   |
-|  $cid | int  | 1  | 无  |
+|  $options | array  | 空  | 其它参数  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tid | string  |  232a744776294938469b3c442dcecac0 |   无 |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cid | int  |  1 |   无 |
 
 	户口本首页信息识别
-	HouseIndex($imgurl = '',$tid = '1bc64f846180ac6d768a8a6dfca1151c',$cid = 0)
+	HouseIndex($imgurl = '',$options = [])
 |  参数名称 | 类型  | 默认值  |  说明 |
 | ------------ | ------------ | ------------ | ------------ |
 |  $imgurl | string  | 空  | 户口本首页图片路径  |
-|  $tid | string  | 1bc64f846180ac6d768a8a6dfca1151c  |   |
-|  $cid | int  | 0  |  无 |
+|  $options | array  | 空  | 其它参数  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tid | string  |  1bc64f846180ac6d768a8a6dfca1151c |   无 |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cid | int  |  0 |   无 |
 
 	广东省居住证信息识别
-	gdResideCard($imgurl = '',$tid = 'e678de49ef660977cd536cfd4522cc43',$cid = 0)
+	gdResideCard($imgurl = '',$options = [])
 |  参数名称 | 类型  | 默认值  |  说明 |
 | ------------ | ------------ | ------------ | ------------ |
 |  $imgurl | string  | 空  | 居住证图片路径  |
-|  $tid | string  | e678de49ef660977cd536cfd4522cc43  |   |
-|  $cid | int  | 0  |   无 |
+|  $options | array  | 空  | 其它参数  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tid | string  |  e678de49ef660977cd536cfd4522cc43 |   无 |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cid | int  |  0 |   无 |
 
-### Excel类
+	广东省河源市社保卡识别
+	hyEnsure($imgurl = '',$options = [])
+|  参数名称 | 类型  | 默认值  |  说明 |
+| ------------ | ------------ | ------------ | ------------ |
+|  $imgurl | string  | 空  | 社保卡图片路径  |
+|  $options | array  | 空  | 其它参数  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tid | string  |  168e2d1e1f28528ae550e40191324de8 |   无 |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cid | int  |  0 |   无 |
+
+### Excel类（szj\utils\Excel）
 	构造函数
 	construct($conf = array())
 |  参数名称 | 类型  | 默认值  |  说明 |
@@ -243,7 +256,7 @@
 |  $fileName | string  | 空  | 需要导入的excel文件名称  |
 |  $defaultIndex | int  | 0  | 默认导入是第一张表  |
 
-### Mailer类
+### Mailer类 （szj\utils\Mailer）
 ### 一、简单示例
 ```php
 $Mailer = new \szj\utils\Mailer;
@@ -288,7 +301,7 @@ $result = $Mailer->send();
 var_dump($result);
 ```
 
-### Map类
+### Map类 （szj\utils\Map）
 ### 构造函数
 #### 1、无参的构造函数
 ```php
@@ -346,9 +359,116 @@ print_r($result);
 |  $dest | string/array  | 是  |  结束坐标点(建议用string) |
 |  $ak |  string  |   否 |百度地图的ak值,如果构造函数传了ak参数，这里可以不传  |
 
+### 微信功能类
+#### 一、微信公众号接口类（szj\utils\wxSdk\WechatSignal）
+
+> |  方法名称 |  参数个数 | 功能描述  |
+| ------------ | ------------ | ------------ |
+| checkSignature  | 1  |  微信开发者接口通信验证 |
+
+> |  参数 | 类型  | 是否必须  | 说明  |
+| ------------ | ------------ | ------------ | ------------ |
+|  $token |  string | 是  | 微信验证的token  |
+
+#### 二、微信支付接口类(szj\utils\wxSdk\WechatPay)
+
+> |  方法名称 |  参数个数 | 功能描述  |
+| ------------ | ------------ | ------------ |
+| UnifiedOrder  | 1 |  支付统一下单接口 |
+
+> |  参数 | 类型  | 是否必须  | 说明  |
+| ------------ | ------------ | ------------ | ------------ |
+|  $data |  array | 是  | 参数，具体信息查看下方  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appid|  string | 是  | appid  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;body|  string | 是  | 商品信息描述  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mch_id|  string | 是  | 商户ID号  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;openid|  string | 是  | 微信用户openid  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out_trade_no|  string | 是  | 订单号  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;total_fee|  int | 是  | 订单金额（分）  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trade_type|  string | 是  | 选值(JSAPI/NATIVE)  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key|  string | 是  | 支付密钥 |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scene_info|  array | 否  | 支付场景说明(自定义数组) |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;notify_url|  string | 否  | 默认值 (域名+index.php/index/Wechat/wxcallback |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time_start|  string | 否  | 当前时间 |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time_expire|  string | 否  | 当前时间 + 2小时 |
 
 
+------------
 
 
+> |  方法名称 |  参数个数 | 功能描述  |
+| ------------ | ------------ | ------------ |
+| CloseOrder  | 1 |  关闭订单接口 |
 
+> |  参数 | 类型  | 是否必须  | 说明  |
+| ------------ | ------------ | ------------ | ------------ |
+|  $data |  array | 是  | 参数，具体信息查看下方  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appid|  string | 是  | appid  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mch_id|  string | 是  | 商户ID号  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out_trade_no|  string | 是  | 订单号  |
+
+
+------------
+
+
+> |  方法名称 |  参数个数 | 功能描述  |
+| ------------ | ------------ | ------------ |
+| QueryOrder  | 1 |  订单查询接口 |
+
+> |  参数 | 类型  | 是否必须  | 说明  |
+| ------------ | ------------ | ------------ | ------------ |
+|  $data |  array | 是  | 参数，具体信息查看下方  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appid|  string | 是  | appid  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mch_id|  string | 是  | 商户ID号  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out_trade_no|  string | 是  | 订单号  |
+
+
+------------
+
+
+> |  方法名称 |  参数个数 | 功能描述  |
+| ------------ | ------------ | ------------ |
+| BillOrder  | 1 |  下载对账单(该功能不稳定 微信有时有 有时无的) |
+
+> |  参数 | 类型  | 是否必须  | 说明  |
+| ------------ | ------------ | ------------ | ------------ |
+|  $data |  array | 是  | 参数，具体信息查看下方  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appid|  string | 是  | appid  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mch_id|  string | 是  | 商户ID号  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bill_date|  string | 是  | 具体日期(20xx-xx-xx)  |
+
+
+------------
+> |  方法名称 |  参数个数 | 功能描述  |
+| ------------ | ------------ | ------------ |
+| RefundOrder  | 3 |  申请退款 |
+
+> |  参数 | 类型  | 是否必须  | 说明  |
+| ------------ | ------------ | ------------ | ------------ |
+|  $data |  array | 是  | 参数，具体信息查看下方  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appid|  string | 是  | appid  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mch_id|  string | 是  | 商户ID号  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out_trade_no|  string | 是  | 订单号  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;total_fee|  int | 是  | 订单金额(分)  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;refund_fee|  int | 是  | 退款金额(分)  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;notify_url|  string | 否  | 默认不接收回调  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out_refund_no|  string | 否  | 退款单号  |
+|  $cert |  string | 是  | 商户api证书  |
+|  $key |  string | 是  | 商户api证书  |
+
+
+------------
+> |  方法名称 |  参数个数 | 功能描述  |
+| ------------ | ------------ | ------------ |
+| RefundQuery  | 1 |  退款信息查询 |
+
+> |  参数 | 类型  | 是否必须  | 说明  |
+| ------------ | ------------ | ------------ | ------------ |
+|  $data |  array | 是  | 参数，具体信息查看下方  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appid|  string | 是  | appid  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mch_id|  string | 是  | 商户ID号  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out_trade_no|  string | 是  | 订单号  |
+
+
+------------
 
