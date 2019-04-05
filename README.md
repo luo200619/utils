@@ -471,4 +471,75 @@ print_r($result);
 
 
 ------------
+> |  方法名称 |  参数个数 | 功能描述  |
+| ------------ | ------------ | ------------ |
+| JsPayOptions  | 1 |  微信前端JS支付参数获取 |
+
+> |  参数 | 类型  | 是否必须  | 说明  |
+| ------------ | ------------ | ------------ | ------------ |
+|  $data |  array | 是  | 参数，具体信息查看下方  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appid|  string | 是  | appid  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_code|  string | 是  | 下单时返回的内容  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_msg|  string | 是  | 下单时返回的内容  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result_code|  string | 是  | 下单时返回的内容  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prepay_id|  string | 是  | 下单时返回的内容  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key|  string | 是  | 支付密钥  |
+
+------------
+#### 一、微信公众号接口类（szj\utils\wxSdk\WechatMsg）
+
+> |  方法名称 |  参数个数 | 功能描述  |
+| ------------ | ------------ | ------------ |
+| sendMsgCustom  | 3  |  微信发送消息(48小时内有效) |
+
+> |  参数 | 类型  | 是否必须  | 说明  |
+| ------------ | ------------ | ------------ | ------------ |
+|  $openid |  string | 是  | 用户的wxid  |
+|  $type |  string | 是  | 消息类型选值为(text/image/voice/mpnews/video/music/news/msgmenu)  |
+|  $content |  string/array | 是  | 消息内容（数组请参考微信官方参数）  |
+
+> |  方法名称 |  参数个数 | 功能描述  |
+| ------------ | ------------ | ------------ |
+| QrcodeTemp  | 1  |  生成临时二维码 |
+
+> |  参数 | 类型  | 是否必须  | 说明  |
+| ------------ | ------------ | ------------ | ------------ |
+|  $content |  string/int/array | 是  | 二维码内容  |
+|  $defaultTime |  string | 否  |  默认1天后过期 |
+
+> |  方法名称 |  参数个数 | 功能描述  |
+| ------------ | ------------ | ------------ |
+| QrcodeLong  | 1  |  生成二维码 |
+
+> |  参数 | 类型  | 是否必须  | 说明  |
+| ------------ | ------------ | ------------ | ------------ |
+|  $content |  string/int/array | 是  | 二维码内容  |
+
+
+------------
+
+#### 一、微信公众号接口类（szj\utils\wxSdk\WechatJssdk）
+
+> |  方法名称 |  参数个数 | 功能描述  |
+| ------------ | ------------ | ------------ |
+| getSign  | 1  |  生成二维码 |
+
+> |  参数 | 类型  | 是否必须  | 说明  |
+| ------------ | ------------ | ------------ | ------------ |
+|  $config |  array | 是  | 参数配置  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;appid |  string | 是  | 公众号appid  |
+|  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url |  string | 否  | 调用地址  |
+
+
+
+
+
+
+
+
+
+
+
+
+
 
