@@ -13,6 +13,7 @@
     "autoload":{
 	"psr-4":{
 		"szj\\utils\\":"src/szj/utils"
-	}
+	},
+	"files":["src/szj/utils/szjInit.php"]
     }
 }
